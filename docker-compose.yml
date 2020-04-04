@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  database_data:
+    driver: local
+  .:
+
+services:
+  gin_web:
+    build: .
+    working_dir: /root/go/src/url_shortener
+    volumes:
+      - ./src:/root/go/src/url_shortener
+    ports:
+      - "8080:8080"
+      - "2228:22"
+    environment:
+      GOROOT: /usr/local/go
+      GOPATH: $HOME/go
+      PATH: $GOPATH/bin:$GOROOT/bin:$PATH
+    depends_on:
+      - mysql
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    hostname: mysql
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: 'gin_us'
+      MYSQL_USER: 'root'
+      MYSQL_ROOT_PASSWORD: 'verysafe'
+    volumes:
+      - ./docker/db/conf.d:/etc/mysql/conf.d
+      - ./log/mysql:/var/log/mysql
