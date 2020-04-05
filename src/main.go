@@ -19,6 +19,7 @@ func main() {
 		fmt.Println("status: ", err)
 	}
 
+	Config.DB.LogMode(true)
 	Config.DB.AutoMigrate(&Models.Url{})
 
 	r := Routes.SetupRouter()
