@@ -20,7 +20,16 @@ func CreateUrl(c *gin.Context) {
 	var url Models.Url
 	// what does it do
 	c.BindJSON(&url)
-	err := Models.CreateUrl(&url)
+	payloadUrl := url.Url
+	err := Models.GetUrlByUrl(&url, payloadUrl)
+
+	// Return if already exists
+	if err == nil {
+		c.JSON(http.StatusOK, url)
+		return
+	}
+
+	err = Models.CreateUrl(&url)
 	if err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 	} else {

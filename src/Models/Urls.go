@@ -15,6 +15,7 @@ func (u *Url) TableName() string {
 	return "url"
 }
 
+// curl localhost:8080/v1/urls
 func GetAllUrls(url *[]Url) (err error) {
 	if err = Config.DB.Find(url).Error; err != nil {
 		return err
@@ -22,6 +23,7 @@ func GetAllUrls(url *[]Url) (err error) {
 	return nil
 }
 
+// curl -X POST localhost:8080/v1/urls -d '{"url": "dupa"}
 func CreateUrl(url *Url) (err error) {
 	if err = Config.DB.Create(url).Error; err != nil {
 		return err
@@ -31,6 +33,13 @@ func CreateUrl(url *Url) (err error) {
 
 func GetUrl(url *Url, id string) (err error) {
 	if err := Config.DB.Where("id = ?", id).First(url).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func GetUrlByUrl(url *Url, payloadUrl string) (err error) {
+	if err := Config.DB.Where("url = ?", payloadUrl).First(url).Error; err != nil {
 		return err
 	}
 	return nil
