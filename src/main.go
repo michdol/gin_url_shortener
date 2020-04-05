@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"./Config"
-	"./Models"
-	"./Routes"
+	"url_shortener/Config"
+	"url_shortener/Models"
+	"url_shortener/Routes"
 	"github.com/jinzhu/gorm"
 )
 

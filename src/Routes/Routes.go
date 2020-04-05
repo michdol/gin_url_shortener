@@ -1,7 +1,7 @@
 package Routes
 
 import (
-	"../Controllers"
+	"url_shortener/Controllers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,6 +13,10 @@ func SetupRouter() *gin.Engine {
 		v1.POST("urls", Controllers.CreateUrl)
 		v1.GET("urls/:id", Controllers.GetUrl)
 		v1.DELETE("urls/:id", Controllers.DeleteUrl)
+	}
+	redirects := r.Group("/r")
+	{
+		redirects.GET("/:id", Controllers.RedirectById)
 	}
 	return r
 }

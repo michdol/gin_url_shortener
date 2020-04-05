@@ -1,7 +1,7 @@
 package Models
 
 import (
-	"../Config"
+	"url_shortener/Config"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -15,7 +15,6 @@ func (u *Url) TableName() string {
 	return "url"
 }
 
-// curl localhost:8080/v1/urls
 func GetAllUrls(url *[]Url) (err error) {
 	if err = Config.DB.Find(url).Error; err != nil {
 		return err
@@ -23,7 +22,6 @@ func GetAllUrls(url *[]Url) (err error) {
 	return nil
 }
 
-// curl -X POST localhost:8080/v1/urls -d '{"url": "dupa"}
 func CreateUrl(url *Url) (err error) {
 	if err = Config.DB.Create(url).Error; err != nil {
 		return err
